@@ -1,0 +1,69 @@
+﻿<Window x:Class="DA.DAIE.CaseSelection.CaseSelectionWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CaseSelection="clr-namespace:DA.DAIE.CaseSelection"
+  
+    Title="Day Ahead Import Export" 
+        MinHeight="300" 
+        MinWidth="300" 
+        Loaded="Window_Loaded" 
+        SizeToContent="WidthAndHeight" 
+        WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize">
+    <Grid ClipToBounds="True" Name="grid1">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0"
+                    HorizontalAlignment="Stretch"
+                    Name="tabControl1" 
+                    VerticalAlignment="stretch" 
+                    BorderBrush="Transparent">
+            <TabItem Name="TabItemDA" Header="DA">
+                <CaseSelection:CaseSelectionControl  Mode="DA" x:Name="CaseSelectionDA">
+                </CaseSelection:CaseSelectionControl>
+            </TabItem>
+            <TabItem Name="TabItemRA" Header="RA">
+                <CaseSelection:CaseSelectionControl Mode="RAA_SCRA" x:Name="CaseSelectionRA">
+               </CaseSelection:CaseSelectionControl>
+            </TabItem>
+            <TabItem Name="TabItemDALR" Header="DALR">
+                <CaseSelection:CaseSelectionControl Mode="DALR" x:Name="CaseSelectionDALR">
+                </CaseSelection:CaseSelectionControl>
+            </TabItem>
+            <TabItem Name="TabItemAdmin" Header="Admin">
+                <CaseSelection:CaseSelectionControl Mode="ADMIN" x:Name="CaseSelectionAdmin">
+                </CaseSelection:CaseSelectionControl>
+            </TabItem>
+        </TabControl>
+        <StatusBar Height="23" Name="statusBar1" Grid.Row="1" >
+            <StatusBar.BitmapEffect>
+                <DropShadowBitmapEffect />
+            </StatusBar.BitmapEffect>
+            <StatusBarItem>
+                <TextBlock x:Name="StatusTextUser" Margin="10,0,0,0">User</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Separator/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock x:Name="StatusTextRole" Margin="10,0,0,0">Role</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Separator/>
+            </StatusBarItem>
+
+            <StatusBarItem>
+                <TextBlock x:Name="StatusTextDataBase" Margin="10,0,0,0">Data Base</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Separator/>
+            </StatusBarItem>
+            
+
+        </StatusBar>
+        </Grid>
+
+
+</Window>

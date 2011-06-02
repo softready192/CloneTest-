@@ -1,0 +1,110 @@
+﻿<Window x:Class="DA.DAIE.Reserve.ReserveWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+            DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Title="Upload Reserve Requirements" MinHeight="300" Width="600" 
+        SizeToContent="WidthAndHeight"
+        Background="LightGray">
+    <GroupBox Name="groupBox1" Margin="5,5,5,5" ClipToBounds="True">
+    <Grid Name="grid1" ClipToBounds="True" Margin="5,5,5,5">
+        <syncfusion:DoubleTextBox MaxValue="200" MinValue="0" Height="23" Margin="0,9,10,0" Name="integerTextBox1" VerticalAlignment="Top" TextChanged="integerTextBox1_TextChanged" IsEnabled="False" HorizontalAlignment="Right" Width="47" MinValidation="OnLostFocus" MinValueOnExceedMinDigit="False" MaxValueOnExceedMaxDigit="False" />
+        <syncfusion:DoubleTextBox MaxValue="200" MinValue="50" Height="23" Margin="0,33,10,0" Name="integerTextBox2" VerticalAlignment="Top" TextChanged="integerTextBox2_TextChanged" IsEnabled="False" HorizontalAlignment="Right" Width="47" MinValidation="OnLostFocus" MinValueOnExceedMinDigit="False" MaxValueOnExceedMaxDigit="False" />
+        <syncfusion:DoubleTextBox MaxValue="100" MinValue="0" Height="23" Margin="0,58,10,0" Name="integerTextBox3" VerticalAlignment="Top" TextChanged="integerTextBox3_TextChanged" IsEnabled="False" HorizontalAlignment="Right" Width="47" MinValidation="OnLostFocus" MinValueOnExceedMinDigit="False" MaxValueOnExceedMaxDigit="False" />
+
+
+
+        <Button Height="23" Margin="10,0,0,11"  Name="buttonRefresh" VerticalAlignment="Bottom" Click="buttonRefresh_Click" HorizontalAlignment="Left" Width="75" >Refresh</Button>
+        <Button Height="23" Margin="94,0,0,11" Name="buttonUpload" VerticalAlignment="Bottom" Click="buttonUpload_Click" HorizontalAlignment="Left" Width="75">Upload</Button>
+        <Button Height="23" Margin="179,0,0,11" Name="buttonReturn" VerticalAlignment="Bottom" Click="buttonReturn_Click" HorizontalAlignment="Left" Width="75">Return</Button>
+        <Button Height="23" Margin="263,0,0,11" Name="buttonUpdatePct" VerticalAlignment="Bottom" Click="buttonUpdatePct_Click" HorizontalAlignment="Left" Width="75" Content="Edit Pct"></Button>
+        <Button Height="23" Margin="347,0,0,11" Name="buttonLoadTransRSS" VerticalAlignment="Bottom" Click="buttonLoadTransRSS_Click" HorizontalAlignment="Left" Width="120" Content="_Load Trans From RSS" ></Button>
+
+
+
+            <syncfusion:GridDataControl
+            syncfusion:Name="dataGrid"
+            ShowGroupDropArea="False"
+            ShowAddNewRow="False"
+            AllowSelection="None"
+            AutoPopulateColumns="False" 
+            NotifyPropertyChanges="True"
+            UpdateMode="LostFocus"
+                KeyDown="dataGrid_KeyDown"
+                ListBoxSelectionMode="None"
+                CurrentCellMoved="dataGrid_CurrentCellMoved"
+                CurrentCellMoving="dataGrid_CurrentCellMoving"
+            PreviewTextInput="dataGrid_PreviewTextInput"
+            AutoPopulateRelations="False"
+            ItemsSource="{Binding COPs}"
+            Margin="10,100,10,43" AllowDelete="False" AllowEdit="True" 
+                ActivateCurrentCellBehavior="SelectAll" ClipToBounds="True" 
+                ScrollViewer.HorizontalScrollBarVisibility="Auto" AllowResizeColumns="False" 
+                AllowResizeRows="False" ExcelLikeCurrentCell="False" AllowSort="False">
+
+            <syncfusion:GridDataControl.VisibleColumns>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="True" MappingName="HourLabel" HeaderText="HR" Width="23"/>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="Contingency1" HeaderText="1st Cont" Width="55">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle AcceptsReturn="True" CellType="TextBox" Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="Contingency2" HeaderText="2nd Cont" Width="57">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="InterfaceHQ" HeaderText="HQ" Width="55">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="InterfaceNB" HeaderText="NB" Width="55">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="MISNB" HeaderText="MIS+NB" Width="55">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="MYS89" HeaderText="MYS8+9" Width="55">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="False" MappingName="Misc" HeaderText="Misc" Width="55">
+                        <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    </syncfusion:GridDataVisibleColumn>
+                    <syncfusion:GridDataVisibleColumn IsReadOnly="True" MappingName="CalcTotal10SpinRequirement" HeaderText="10MSync" Width="55"/>
+                <syncfusion:GridDataVisibleColumn IsReadOnly="True" MappingName="CalcTotal10Requirement" HeaderText="Tot10M" Width="55"/>
+                <syncfusion:GridDataVisibleColumn IsReadOnly="True" MappingName="CalcTotal30Requirement" HeaderText="Tot30M" Width="55"/>
+            </syncfusion:GridDataControl.VisibleColumns>
+
+        </syncfusion:GridDataControl>
+        <Label Height="23" HorizontalAlignment="Left" Margin="10,28,0,0" Name="label1" VerticalAlignment="Top" Width="44" Content="Case: " FontSize="12" FontWeight="Bold"></Label>
+        <Label Height="28" Margin="50,28,97,0" Name="labelCase" VerticalAlignment="Top" Content="CaseId" FontSize="12" FontWeight="Bold"></Label>
+        <Label Margin="0,6,63.624,0" Name="label2" HorizontalAlignment="Right" Width="50.423" Height="28" VerticalAlignment="Top">1st Cont</Label>
+        <Label Margin="0,31,60,177" Name="label3" HorizontalAlignment="Right" Width="54.047">2nd Cont</Label>
+        <Label Height="28" Margin="0,55,60,0" Name="label4" VerticalAlignment="Top" HorizontalAlignment="Right" Width="37.857">TMSR</Label>
+            <Label Height="28" Margin="0,6,110,0" Name="label5" VerticalAlignment="Top" FontSize="14" FontWeight="Bold">Upload Reserve Requirements</Label>
+            
+        </Grid>
+    </GroupBox>
+</Window>

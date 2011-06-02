@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="DA.DAIE.CaseSelection.CaseSelectionControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DA.DAIE.CaseSelection"
+             ClipToBounds="True"
+    Loaded="UserControl_Loaded" FontSize="15">
+    <Grid Name="MyGrid" ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+             <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        
+        <GroupBox Name="chooseCaseGroupBox" Grid.Row="0" Grid.Column="0" 
+                  Grid.ColumnSpan="2"  Margin="5,5,5,5" BorderThickness="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Name="labelChooseCase" Text="Choose Case"/>
+                </StackPanel>
+                <ComboBox IsSynchronizedWithCurrentItem="True" Name="comboBoxSelectCase" 
+                          Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                              SelectionChanged="comboBoxSelectCase_SelectionChanged">
+
+                </ComboBox>
+
+                <Label Name="labelShowApprovedCasesShortcutAltA" 
+                        Grid.Row="0" Grid.Column="2" 
+                        VerticalAlignment="Center" 
+                        Width="1" Height="1" 
+                        AccessKeyManager.AccessKeyPressed="Button_KeyPressed"
+                        FontSize="15">_A</Label>
+
+                <Button Name="buttonList" 
+                        Grid.Row="1" Grid.Column="3" 
+                        VerticalAlignment="Center" 
+                        Width="Auto" 
+                        Click="Button_Refresh_Case_List" 
+                        FontSize="15">Refresh List</Button>
+            </Grid>
+        </GroupBox>
+
+        
+
+        <local:ModuleSelectionControl x:Name="cmdDataValid" LabelText="Data Validation" Grid.Row="1" Grid.Column="0" Visibility="Visible" />
+        <!-- local:ModuleSelectionControl x:Name="cmdSetMIP"    LabelText="Use MIP Flag"    Grid.Row="1" Grid.Column="1" Visibility="Visible" /-->
+        <local:ModuleSelectionControl x:Name="cmdGetRSCConstraints" LabelText="Create RSC Constraint" Grid.Row="2" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdUpdateCloseHour" LabelText="Update Market Close Hour"  Grid.Row="2" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdConstraint" LabelText="Upload Constraint File" Grid.Row="3" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdMMM" LabelText="Upload MMM File" Grid.Row="3" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdReserves" LabelText="Upload System Reserves"      Grid.Row="4" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdExtTrans" LabelText="Edit External Transaction"   Grid.Row="4" Grid.Column="1"/>
+        <local:ModuleSelectionControl x:Name="cmdPrint" LabelText="Print Reports" Grid.Row="5" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdInitExtTrans" LabelText="Initialize External Transaction" Grid.Row="5" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdCopModify" LabelText="COP Modification" Grid.Row="6" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="cmdInitLoadResp" LabelText="Initialize Load Response" Grid.Row="6" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdApprove" LabelText="Approve SCRA Case" Grid.Row="7" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdInitZoneDemand" LabelText="Initialize Zonal Demand" Grid.Row="7" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdPIC" LabelText="Start PIC" Grid.Row="8" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdEditDRZonalFcst" LabelText="Edit DR Zonal Forecast" Grid.Row="8" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdSFT" LabelText="Check SFT Violations" Grid.Row="9" Grid.Column="0" />
+        <local:ModuleSelectionControl x:Name="cmdRunEES" LabelText="Rerun EES Bridge" Grid.Row="9" Grid.Column="1" />
+        <local:ModuleSelectionControl x:Name="cmdCopDuplicate" LabelText="Duplicate COP" Grid.Row="10" Grid.Column="0" />
+        <!--local:ModuleSelectionControl x:Name="cmdMitigate" LabelText="Real Time Mitigation" Grid.Row="10" Grid.Column="1" /-->
+        <local:ModuleSelectionControl x:Name="cmdInitDRZonalFcst" LabelText="Initialize DR Zonal Forecast" Grid.Row="11" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="cmdLocReserves" LabelText="Upload Locational Res Req" Grid.Row="11" Grid.Column="1"/>
+        <local:ModuleSelectionControl x:Name="cmdAdminSql" LabelText="Admin Sql" Grid.Row="12" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="cmdAdminLoginTest" LabelText="Login Test" Grid.Row="12" Grid.Column="1"/>
+        <local:ModuleSelectionControl x:Name="cmdAdminFTPLogin" LabelText="FTP Login" Grid.Row="13" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="cmdAdminReportLogin" LabelText="Report Login" Grid.Row="13" Grid.Column="1"/>
+        <local:ModuleSelectionControl x:Name="cmdLogView" LabelText="Log Viewer" Grid.Row="14" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="spacer01" LabelText="----------" Grid.Row="15" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="spacer02" LabelText="----------" Grid.Row="15" Grid.Column="1"/>
+        <local:ModuleSelectionControl x:Name="cmdApproveFilesOnly" LabelText="Approve Files Only" Grid.Row="16" Grid.Column="0"/>
+        <local:ModuleSelectionControl x:Name="cmdCleanRSCConstraints" LabelText="Clean RSC Constraints" Grid.Row="16" Grid.Column="1"/>
+        <local:ModuleSelectionControl x:Name="cmdConnectionPasswords" LabelText="Set Connection Passwords" Grid.Row="17" Grid.Column="0"/>
+    </Grid>
+</UserControl>

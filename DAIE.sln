@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CBC7E241-EBCD-47D9-968D-A432D857CF51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA.Common", "DA.Common\DA.Common.csproj", "{CAF9ECA2-5FAB-4E78-A7E2-48ACE3AF8171}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBatisNet.Common.DAIE", "IBatis\IBatisNet.Common\IBatisNet.Common.DAIE.csproj", "{BBC8DA4A-EA88-41D9-8B93-929B8F3ADADE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBatisNet.Common.Logging.Log4Net.DAIE", "IBatis\IBatisNet.Common.Logging.Log4Net\IBatisNet.Common.Logging.Log4Net.DAIE.csproj", "{023FE8D7-7E1A-4DDF-A0EA-8FB0E1B3122B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBatisNet.DataMapper.DAIE", "IBatis\IBatisNet.DataMapper\IBatisNet.DataMapper.DAIE.csproj", "{F3E45F39-3224-4EAD-B138-EB5CC0E32824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA.DAIE", "DA.DAIE\DA.DAIE.csproj", "{ED5C2D3A-3F9C-4848-B457-C1B71BCC5532}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 6
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = DA.Common\\DA.Common.csproj
+		SccLocalPath1 = .
+		SccProjectFilePathRelativizedFromConnection1 = DA.Common\\
+		SccProjectUniqueName2 = DA.DAIE\\DA.DAIE.csproj
+		SccLocalPath2 = .
+		SccProjectFilePathRelativizedFromConnection2 = DA.DAIE\\
+		SccProjectUniqueName3 = IBatis\\IBatisNet.Common.Logging.Log4Net\\IBatisNet.Common.Logging.Log4Net.DAIE.csproj
+		SccLocalPath3 = .
+		SccProjectFilePathRelativizedFromConnection3 = IBatis\\IBatisNet.Common.Logging.Log4Net\\
+		SccProjectUniqueName4 = IBatis\\IBatisNet.Common\\IBatisNet.Common.DAIE.csproj
+		SccLocalPath4 = .
+		SccProjectFilePathRelativizedFromConnection4 = IBatis\\IBatisNet.Common\\
+		SccProjectUniqueName5 = IBatis\\IBatisNet.DataMapper\\IBatisNet.DataMapper.DAIE.csproj
+		SccLocalPath5 = .
+		SccProjectFilePathRelativizedFromConnection5 = IBatis\\IBatisNet.DataMapper\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAF9ECA2-5FAB-4E78-A7E2-48ACE3AF8171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF9ECA2-5FAB-4E78-A7E2-48ACE3AF8171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF9ECA2-5FAB-4E78-A7E2-48ACE3AF8171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF9ECA2-5FAB-4E78-A7E2-48ACE3AF8171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBC8DA4A-EA88-41D9-8B93-929B8F3ADADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBC8DA4A-EA88-41D9-8B93-929B8F3ADADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBC8DA4A-EA88-41D9-8B93-929B8F3ADADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBC8DA4A-EA88-41D9-8B93-929B8F3ADADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{023FE8D7-7E1A-4DDF-A0EA-8FB0E1B3122B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{023FE8D7-7E1A-4DDF-A0EA-8FB0E1B3122B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{023FE8D7-7E1A-4DDF-A0EA-8FB0E1B3122B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{023FE8D7-7E1A-4DDF-A0EA-8FB0E1B3122B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E45F39-3224-4EAD-B138-EB5CC0E32824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E45F39-3224-4EAD-B138-EB5CC0E32824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E45F39-3224-4EAD-B138-EB5CC0E32824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E45F39-3224-4EAD-B138-EB5CC0E32824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5C2D3A-3F9C-4848-B457-C1B71BCC5532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5C2D3A-3F9C-4848-B457-C1B71BCC5532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5C2D3A-3F9C-4848-B457-C1B71BCC5532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5C2D3A-3F9C-4848-B457-C1B71BCC5532}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

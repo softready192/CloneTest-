@@ -1,0 +1,154 @@
+﻿<Window x:Class="DA.DAIE.ExternalTransaction.ExternalTransactionWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DA.DAIE.ExternalTransaction"
+        
+        xmlns:global="clr-namespace:System.Globalization;assembly=mscorlib"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Background="LightGray" 
+    Title="External Transactions"  xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+        Width="302" SizeToContent="Height" Loaded="Window_Loaded" MinHeight="473">
+    
+    <Window.Resources>
+        
+        <x:Array x:Key="intData" Type="{x:Type sys:Int32}">
+            <sys:Int32>1</sys:Int32>
+        </x:Array>
+        
+
+    </Window.Resources>
+
+    <GroupBox  Name="groupBox1" ClipToBounds="True" >
+        
+
+    <Grid Margin="5" ClipToBounds="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="24" />
+            <RowDefinition Height="Auto" MinHeight="17" />
+            <RowDefinition Height="Auto" MinHeight="24" />
+            <RowDefinition Height="Auto" MinHeight="24" />
+            <RowDefinition Height="Auto" MinHeight="21" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="23" />
+            <RowDefinition Height="Auto" MinHeight="23" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        
+        <Label Grid.Row="0"
+               HorizontalContentAlignment="Center" 
+               Height="24" 
+               FontSize="14"
+               Content="Case"/>
+
+        <TextBlock 
+               Grid.Row="1"
+               Text="{Binding Path=CaseId, FallbackValue=Unknown_CaseId }" 
+               TextAlignment="Center" 
+               FontSize="14"/>
+        
+        <TextBlock Height="24" 
+               Grid.Row="2"
+               
+               Text="{Binding Path=CaseName, FallbackValue=Unknown_CaseName }" 
+               TextAlignment="Center" 
+               FontSize="14"/>
+        
+         <Label HorizontalContentAlignment="Center" 
+               Height="24" 
+               Grid.Row="3"
+               
+               FontSize="14"
+               Content="Select Interface"/>
+        
+         <ComboBox 
+               Grid.Row="4"
+               Name="comboBoxSelectInterface" 
+               ScrollViewer.CanContentScroll="True" 
+               ClipToBounds="True" 
+               BorderThickness="20,0" 
+               ItemsSource="{Binding Path=InterfaceList}"
+               SelectionChanged="comboBoxSelectInterface_SelectionChanged"
+               />
+        
+
+             
+                      <syncfusion:GridDataControl 
+             Grid.Row="7"
+             Name="dataGrid"
+             Margin="40,10,40,0"
+                          MinHeight="420"
+             ShowGroupDropArea="False"
+             AutoPopulateColumns="False" 
+             AutoPopulateRelations="False" 
+             AllowDelete="False" 
+             ShowAddNewRow="False" 
+             AllowSelection="None" 
+             ScrollViewer.CanContentScroll="False" 
+             ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                          KeyDown="dataGrid_KeyDown"
+                          PreviewTextInput="dataGrid_PreviewTextInput"
+                          CurrentCellMoving="dataGrid_CurrentCellMoving"
+                          CurrentCellMoved="dataGrid_CurrentCellMoved"
+             ActivateCurrentCellBehavior="SelectAll" 
+             AllowResizeColumns="False" 
+             AllowResizeRows="False" 
+             ExcelLikeCurrentCell="False" Focusable="True" 
+             ExcelLikeSelectionFrame="False" 
+             ListBoxSelectionMode="None" AllowSort="False">
+             
+             <syncfusion:GridDataControl.VisibleColumns>
+                <syncfusion:GridDataVisibleColumn Width="23" MappingName="HourLabel" HeaderText="HR" AutoFit="False">
+                    
+                   <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                        <syncfusion:GridDataColumnStyle Background="LightGray" HorizontalAlignment="Right" />
+                    </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    
+                </syncfusion:GridDataVisibleColumn>
+                <syncfusion:GridDataVisibleColumn Width="55" MappingName="FixedMW" HeaderText="Fixed"  >
+                    <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                            <syncfusion:GridDataColumnStyle 
+                            Background="LightBlue" HorizontalAlignment="Right">
+                            </syncfusion:GridDataColumnStyle>
+                        </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    
+
+                </syncfusion:GridDataVisibleColumn>
+
+                <syncfusion:GridDataVisibleColumn Width="55" MappingName="PurchaseMW" HeaderText="Purchase" AutoFit="False" >
+                    
+                   <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                        <syncfusion:GridDataColumnStyle Background="LightGray" HorizontalAlignment="Right"/>
+                    </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    
+                </syncfusion:GridDataVisibleColumn>
+                <syncfusion:GridDataVisibleColumn Width="55" MappingName="SaleMW" HeaderText="Sale" AutoFit="False">
+                    
+                   <syncfusion:GridDataVisibleColumn.ColumnStyle>
+                        <syncfusion:GridDataColumnStyle Background="LightGray"  HorizontalAlignment="Right"/>
+                    </syncfusion:GridDataVisibleColumn.ColumnStyle>
+                    
+                </syncfusion:GridDataVisibleColumn>
+             </syncfusion:GridDataControl.VisibleColumns>
+         </syncfusion:GridDataControl>
+        
+        <Label Grid.Row="9" Margin="63,0,0,10" Height="23" Name="labelTotal" VerticalAlignment="Top" 
+               HorizontalContentAlignment="Right" HorizontalAlignment="Left" Width="55">Total Fixed</Label>
+        
+        <Button Grid.Row="10" Margin="40,0,0,0" Height="23" Name="buttonUpdate" Click="buttonUpdate_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80">Update</Button>
+        <Button Grid.Row="10" Margin="0,0,40,0" Height="23" Name="buttonReturn" Click="buttonReturn_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75">Return</Button>
+        
+        </Grid>
+
+    </GroupBox>
+</Window>

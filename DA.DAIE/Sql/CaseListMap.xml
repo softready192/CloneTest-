@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sqlMap namespace="CaseList" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <alias>
+    <typeAlias alias="CaseListItem" type="DA.DAIE.CaseSelection.Case" />
+    <typeAlias alias="MktHourRow" type="DA.DAIE.CaseSelection.MktHourRow" />
+  </alias>
+  <resultMaps>
+    <resultMap id="CaseHourRM" class="MktHourRow">
+      <constructor>
+        <argument argumentName="argMktHour" column="mkthour" />
+        <argument argumentName="argMktDay" column="mktday" />
+        <argument argumentName="argLocalHour" column="localhour" />
+        <argument argumentName="argLocalDay" column="localday" />
+        <argument argumentName="argHourLabel" column="hourlabel" />
+        <argument argumentName="argDayLabel" column="daylabel" />
+        <argument argumentName="argPeriodLabel" column="periodlabel" />
+        <argument argumentName="argEnergyHigh" column="energyhigh" />
+      </constructor>
+    </resultMap>
+    <resultMap id="CaseListRM" class="CaseListItem">
+      <constructor>
+        <argument argumentName="argId" column="caseid" dbType="Numeric" />
+        <argument argumentName="argName" column="casename" />
+      </constructor>
+    </resultMap>
+  </resultMaps>
+  <statements>
+    <select id="CaseHour" resultMap="CaseHourRM" parameterClass="System.String"><![CDATA[
+          select 
+              h.mkthour,
+              h.mktday,
+              h.localhour,
+              h.localday,
+              h.hourlabel,
+              h.daylabel,
+              h.periodlabel,
+              h.energyhigh
+          from 
+              mkthour h, mktcase c
+          where 
+              c.caseid = #CaseId#
+          and c.mktday = h.mktday
+          order by h.mkthour
+      ]]></select>
+    <select id="CaseListDA" resultMap="CaseListRM" encrypted="false" description="">SELECT to_char(c.caseid) caseid, to_char(c.caseid) || '  |  ' || c.casename as casename
+  FROM mktcase c, mktstudymode sm, mktcasestate cs
+ WHERE c.studymodeid = sm.studymodeid
+   AND c.casestate = cs.casestate
+   AND c.dayaheadmarket = 1
+   AND sm.modeshortname = 'DayAhead'
+   AND cs.description &lt;&gt; 'Approved'
+   AND c.casename NOT LIKE 'PIC%'
+  ORDER BY c.mktday desc, c.caseid desc</select>
+    <select id="CaseListDAApproved" resultMap="CaseListRM" encrypted="false" description="">
+      SELECT TO_CHAR(c.caseid) AS caseid, 
+                        to_char(c.caseid) || '  |  ' || c.casename as casename
+                 FROM   mktcase c, 
+                        mktstudymode sm, 
+                        mktcasestate cs 
+                 WHERE  c.studymodeid = sm.studymodeid 
+                 AND    c.casestate = cs.casestate 
+                 AND    c.dayaheadmarket = 1 
+                 AND    sm.modeshortname = 'DayAhead' 
+                 AND    cs.description = 'Approved' 
+                 AND    c.casename NOT LIKE 'PIC%' 
+                  ORDER BY c.mktday desc, c.caseid desc
+      </select>
+
+    <select id="CaseListDALR" resultMap="CaseListRM" encrypted="false" description="">
+      <![CDATA[
+      SELECT to_char(c.caseid) caseid, to_char(c.caseid) || '  |  ' || c.casename as casename
+      FROM mktcase c, mktstudymode sm, mktcasestate cs
+      WHERE c.studymodeid = sm.studymodeid
+      AND c.casestate = cs.casestate
+      AND sm.modeshortname = 'LoadResp'
+      AND cs.description <> 'Approved'
+      ORDER BY c.mktday desc, c.caseid desc
+      ]]>
+    </select>
+    <select id="CaseListDALRApproved" resultMap="CaseListRM" encrypted="false" description="">
+      <![CDATA[
+      SELECT to_char(c.caseid) caseid, to_char(c.caseid) || '  |  ' || c.casename as casename
+      FROM mktcase c, mktstudymode sm, mktcasestate cs
+      WHERE c.studymodeid = sm.studymodeid
+      AND c.casestate = cs.casestate
+      AND sm.modeshortname = 'LoadResp'
+      AND cs.description = 'Approved'
+      ORDER BY c.mktday desc, c.caseid desc
+      ]]>
+    </select>
+
+    <select id="CaseListRAA_SCRA" resultMap="CaseListRM" encrypted="false" description="">
+        SELECT  to_char(c.caseid) caseid,
+                to_char(c.caseid) || '  |  ' || c.casename as casename
+         FROM   mktcase c,   
+                mktstudymode sm,   
+                mktcasestate cs    
+         WHERE  c.studymodeid = sm.studymodeid  
+         AND    c.casestate = cs.casestate   
+         AND   (modeshortname = 'Prov' OR modeshortname = 'Reg' OR modeshortname = 'SCRA' OR modeshortname = 'RTRSC')   
+         AND    cs.description &lt;&gt; 'Approved'   
+         AND    c.casename NOT LIKE 'PIC%'   
+          ORDER BY c.mktday desc, c.caseid desc
+      </select>
+    <select id="CaseListRAA_SCRAApproved" resultMap="CaseListRM" encrypted="false" description="">
+        SELECT  to_char(c.caseid) caseid,
+                to_char(c.caseid) || '  |  ' || c.casename as casename  
+         FROM   mktcase c,   
+                mktstudymode sm,   
+                mktcasestate cs    
+         WHERE  c.studymodeid = sm.studymodeid  
+         AND    c.casestate = cs.casestate   
+         AND   (modeshortname = 'Prov' OR modeshortname = 'Reg' OR modeshortname = 'SCRA' OR modeshortname = 'RTRSC')   
+         AND    cs.description = 'Approved'   
+         AND    c.casename NOT LIKE 'PIC%'   
+          ORDER BY c.mktday desc, c.caseid desc
+      </select>
+
+
+    <select id="CaseListADMIN" resultMap="CaseListRM" encrypted="false" description="">
+      SELECT  to_char(c.caseid) caseid,
+      to_char(c.caseid) || '  |  ' || c.casename as casename
+      FROM   mktcase c,
+      mktstudymode sm,
+      mktcasestate cs
+      WHERE  c.studymodeid = sm.studymodeid
+      AND    c.casestate = cs.casestate
+      AND   (modeshortname = 'Prov' OR modeshortname = 'Reg' OR modeshortname = 'SCRA' OR modeshortname = 'RTRSC')
+      AND    cs.description &lt;&gt; 'Approved'
+      AND    c.casename NOT LIKE 'PIC%'
+      ORDER BY c.mktday desc, c.caseid desc
+    </select>
+    <select id="CaseListADMINApproved" resultMap="CaseListRM" encrypted="false" description="">
+      SELECT  to_char(c.caseid) caseid,
+      to_char(c.caseid) || '  |  ' || c.casename as casename
+      FROM   mktcase c,
+      mktstudymode sm,
+      mktcasestate cs
+      WHERE  c.studymodeid = sm.studymodeid
+      AND    c.casestate = cs.casestate
+      AND   (modeshortname = 'Prov' OR modeshortname = 'Reg' OR modeshortname = 'SCRA' OR modeshortname = 'RTRSC')
+      AND    cs.description = 'Approved'
+      AND    c.casename NOT LIKE 'PIC%'
+      ORDER BY c.mktday desc, c.caseid desc
+    </select>
+    
+  </statements>
+</sqlMap>

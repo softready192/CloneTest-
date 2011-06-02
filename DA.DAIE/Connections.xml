@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<connections>
+  <databases>
+    <database name="MDB">
+      <dataSource providerName="oracle11g" encrypted="False" password="ISONE123" currentSchema="UDS" commandTimeout="250"
+       connectionString="Data Source=MDBDEV;User Id=DA_IMP_EXP_OPER;Password=#password#;"/>
+    </database>
+
+    <database name="EES">
+      <dataSource providerName="oracle11g" encrypted="False" password="isone123"
+       connectionString="Data Source=EESDBD;User id=lmp_forecast;Password=#password#;"/>
+    </database>
+
+    <database name="FCST">
+      <dataSource providerName="oracle11g" encrypted="False" password="isone123"
+       connectionString="Data Source=FCSTDBD;User id=raimport_app;Password=#password#;"/>
+    </database>
+
+    <database name="CLU">
+      <dataSource providerName="oracle11g" encrypted="False" password="isone123" currentSchema="UDS" commandTimeout="250"
+       connectionString="Data Source=MDBDEV;User Id=DA_IMP_EXP_OPER;Password=#password#;"/>
+    </database>
+
+
+  </databases>
+
+  <!-- Didn't use ftps because it would imply something else -->
+  <ftplist>
+    <ftp name="MISFTP" >
+      <dataSource server="misftpint.iso-ne.com" path=""
+                  username="scra" 
+                  encrypted="False"
+                  password="scra123" 
+                  keepfiledays="15" />
+    </ftp>
+    
+    <ftp name="SatelliteFTP" >
+      <dataSource server="isowebint" path="DAIE" 
+                  username="morning_report" 
+                  encrypted="False" 
+                  password="07Fall07" 
+                  keepfiledays="15" />
+    </ftp>
+
+
+  </ftplist>
+
+  <networkfolders>
+    <networkfolder name="WEB_SERVER" >
+      <dataSource server="webftpint.iso-ne.com" path="Current_Case1,Archives1"
+                  username="unit_comm"
+                  encrypted="False"
+                  password="isone123"/>
+    </networkfolder>
+    
+    <networkfolder name="PowerFlowFolder">
+      <dataSource server="rtsmbdev" path="emsfiles"/>
+    </networkfolder>
+    <networkfolder name="MMMPICInputFolder">
+      <dataSource server="rtsmbdev" path="MMM"/>
+    </networkfolder>
+    <networkfolder name="MMMPICResultsFolder">
+      <dataSource server="rtsmbdev" path="MMM_PIC_Results"/>
+    </networkfolder>
+    <networkfolder name="MMMBidFolder">
+      <dataSource server="rtsmb" path="MMM"/>
+    </networkfolder>
+
+    <networkfolder name="SFTFolder">
+      <dataSource server="mktsmbdev" path="mktfiles_readonly\export"/>
+    </networkfolder>
+
+    <networkfolder name="GRTFolder">
+      <dataSource server="rtsmb" path="grt\current"/>
+    </networkfolder>"
+
+  </networkfolders>
+  
+  <jasperservers>
+    <jasperserver name="JasperReports">
+      <dataSource username="mraab" 
+                  encrypted="False"
+                  password="isone123"
+                  endpoint="http://jsprint:8080/jasperserver-pro/services/repository"
+                  path="/organizations/iso-ne/organizations/development/reports/apf_moi_reports/" />
+    </jasperserver>
+  </jasperservers>
+  
+</connections> 

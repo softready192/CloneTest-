@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<sqlMap namespace="COP"
+        xmlns="http://ibatis.apache.org/mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+  <alias>
+    <typeAlias alias="COP" type="DA.DAIE.COP.COP"/>
+    <typeAlias alias="COPDuplicateArg" type="DA.DAIE.COP.COPDuplicateArg"/>
+    <typeAlias alias="COPSchedule" type="DA.DAIE.COP.COPSchedule"/>
+    <typeAlias alias="COPScheduleArg" type="DA.DAIE.COP.COPScheduleArg"/>
+  </alias>
+ 
+  <resultMaps>
+    <resultMap id="COPScheduleRM" class="COPSchedule">
+      <constructor>
+        <argument argumentName="argId" column="unitscheduleid"/>
+        <argument argumentName="argName" column="unitscheduleshortname"/>
+        <argument argumentName="argType" column="unitscheduletype"/>
+        <argument argumentName="argEcoMin" column="ecomin"/>
+        <argument argumentName="argEcoMax" column="ecomax"/>
+      </constructor>
+    </resultMap>
+    
+    <resultMap id="COPRM" class="COP" >
+      <constructor>
+        <argument argumentName="argEnabled" column="enabled"/>
+        <argument argumentName="argMktHour" column="mkthour" />
+        <argument argumentName="argUnitId" column="unitid"/>
+        <argument argumentName="argUnitShortName" column="unitshortname" />
+
+        <argument argumentName="argDayLabel" column="daylabel"/>
+        <argument argumentName="argHourLabel" column="hourlabel"/>
+        <argument argumentName="argUnitScheduleShortName" column="unitscheduleshortname"/>
+        <argument argumentName="argDBCalcScheduleType" column="dbcalc_scheduletype"/>
+        <argument argumentName="argDBCalcEcoMax" column="dbcalc_ecomax"/>
+        <argument argumentName="argDBCalcEcoMin" column="dbcalc_ecomin"/>
+        <argument argumentName="argRscCommittedFlag" column="rsccommitted"/>
+        <argument argumentName="argUnitScheduleId" column="unitscheduleid"/>
+        <argument argumentName="argMustRunFlag" column="mustrun"/>
+        <argument argumentName="argEconomicFlag" column="economic"/>
+        <argument argumentName="argEmergencyFlag" column="emergency"/>
+      </constructor>
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap id="COPModify.InsertMktUnitPlanPM" class="COP">
+      <parameter property="UnitId" column="unitid" precision="10" scale="0"/>
+      <parameter property="MktHour" column="effectivehour"/>
+      <parameter property="CalcTerminationHour" column="terminationhour"/>
+      <parameter property="UnitScheduleId" column="unitscheduleid" precision="10" scale="0"/>
+      <parameter property="CalcPlannedMW" column="plannedmw" precision="22" scale="3"/>
+      <parameter property="RSCCommittedFlag" column="rsccommitted" precision="22" scale="3"/>
+      <parameter property="MustRunFlag" column="mustrun"/>
+      <parameter property="EconomicFlag" column="economic"/>
+      <parameter property="EmergencyFlag" column="emergency" />
+    </parameterMap>
+  </parameterMaps>
+  
+  <statements>
+
+    <select id="COP.MKTDAYS">
+      select mktday from mktday
+      where trunc( sysdate) = trunc( localday )
+      or trunc( sysdate + 1 ) = trunc( localday )
+    </select>
+
+    <select id="COPModify.SelectUnitSchedules" resultMap="COPScheduleRM" parameterClass="COPScheduleArg">
+      <![CDATA[
+         SELECT us.unitscheduleid,
+               us.unitscheduleshortname,
+               decode(ust.costbased, 0, 'Price', 1, 'Cost/Mitigation', 'Unknown') unitscheduletype,
+               nvl(usd.economicmin, upd.economicmindefault) ecomin,
+               nvl(usd.economicmax, upd.economicmaxdefault) ecomax
+          FROM mktunitschedule us,
+               mktunitscheduleavail usa,
+               mktunitscheduledaily usd,
+               mktunitscheduletype ust,
+               mktunitparameterdaily upd,
+               (SELECT us.unitid, d.mktday, SUM(usa.committeddayahead) committedDA
+                  FROM mktunitscheduleavail usa,
+                       mktday               d,
+                       mktunitschedule      us,
+                       mktunit              u
+                 WHERE usa.unitscheduleid = us.unitscheduleid
+                   AND d.mktday = usa.mktday
+                   AND us.unitid = u.unitid
+                   AND u.unitshortname = #UnitShortName#
+                   AND d.mktday = #MktDay#
+                 GROUP BY us.unitid, d.mktday) u
+         WHERE us.unitid = u.unitid
+           AND usa.unitscheduleid = us.unitscheduleid
+           AND usa.mktday = u.mktday
+           AND usd.unitscheduleid = us.unitscheduleid
+           AND usd.effectiveday <= u.mktday
+           AND usd.terminationday > u.mktday
+           AND ust.unitscheduletypeid = us.unitscheduletypeid
+           AND ust.costbased = 0
+           AND usa.committeddayahead = u.committedDA
+           AND decode(u.committedDA, 0, usa.available + usd.balancingmarket, 1) =
+               decode(u.committedDA, 0, 2, 1)
+           AND upd.unitid = u.unitid
+           AND upd.effectiveday <= u.mktday
+           AND upd.terminationday > u.mktday
+        UNION
+        SELECT
+
+         us.unitscheduleid,
+         us.unitscheduleshortname,
+         decode(ust.costbased, 0, 'Price', 1, 'Cost/Mitigation', 'Unknown') unitscheduletype,
+         nvl(usd.economicmin, upd.economicmindefault),
+         nvl(usd.economicmax, upd.economicmaxdefault)
+          FROM mktunitschedule       us,
+               mktunitscheduleavail  usa,
+               mktday                d,
+               mktunit               u,
+               mktunitscheduledaily  usd,
+               mktunitscheduletype   ust,
+               mktunitparameterdaily upd
+         WHERE u.unitshortname = #UnitShortName#
+           AND d.mktday = #MktDay#
+           AND us.unitid = u.unitid
+           AND usa.unitscheduleid = us.unitscheduleid
+           AND usa.mktday = d.mktday
+           AND usd.unitscheduleid = us.unitscheduleid
+           AND usd.effectiveday <= d.mktday
+           AND usd.terminationday > d.mktday
+           AND ust.unitscheduletypeid = us.unitscheduletypeid
+           AND ust.costbased = 1
+           AND usa.available = 1
+           AND upd.unitid = u.unitid
+           AND upd.effectiveday <= d.mktday
+           AND upd.terminationday > d.mktday
+
+      ]]>
+    </select>
+    
+    <select id="COPModify.SelectMktUnitNames">
+      <![CDATA[
+         SELECT unitshortname  
+         FROM mktunit  
+         WHERE participantid IS NOT NULL  
+         ORDER BY unitshortname
+      ]]>
+    </select>
+    <select id="COPModify.SelectMktUnitCOP" resultMap="COPRM" parameterClass="System.String">
+      <![CDATA[
+        SELECT      case when (round(timepac.getGMTDate,'HH24') - round(unit.mkthour,'HH24')) > 1/24 then 0 else 1 end as enabled, 
+                    unit.mkthour, 
+                    unit.unitid, 
+                    unitshortname, 
+                    daylabel, 
+                    hourlabel, 
+                    unitscheduleshortname, 
+                    dbcalc_scheduletype, 
+                    nvl(uh.economicmaxovrd, nvl(uh.EconomicMax, nvl(unit.EconomicMax, 
+                      unit.ecomaxdailydefault))) AS dbcalc_ecomax, 
+                    nvl(uh.economicminovrd, nvl(uh.EconomicMin, nvl(unit.EconomicMin, 
+                      unit.ecomindailydefault))) AS dbcalc_ecomin, 
+                    rsccommitted, 
+                    unit.unitscheduleid, 
+                    unit.mustrun, 
+                    unit.economic, 
+                    unit.emergency 
+             FROM   mktunithourly uh, 
+                   (SELECT mkthour, 
+                           u.unitid, 
+                           u.unitshortname, 
+                           d.daylabel, 
+                           h.hourlabel, 
+                           us.unitscheduleshortname AS unitscheduleshortname, 
+                           DECODE(ust.costbased,0,'Price','Cost/Mitigation') AS dbcalc_scheduletype, 
+                           up.rsccommitted, 
+                           us.unitscheduleid, 
+                           up.mustrun, 
+                           up.economic, 
+                           up.emergency, 
+                           usd.EconomicMax, 
+                           usd.EconomicMin, 
+                           upd.economicmaxdefault AS ecomaxdailydefault, 
+                           upd.economicmindefault AS ecomindailydefault 
+                    FROM   mktday d, 
+                           mkthour h, 
+                           mktunitplan up, 
+                           mktunit u, 
+                           mktunitparameterdaily upd, 
+                           mktunitscheduledaily usd, 
+                           mktunitschedule us, 
+                           mktunitscheduletype ust 
+                    WHERE  d.approved = 1 
+                    AND    d.mktday = h.mktday 
+                    AND    d.mktday = #MktDay# 
+                    AND    up.effectivehour <= h.mkthour 
+                    AND    up.terminationhour > h.mkthour 
+                    AND    u.unitid = up.unitid 
+                    AND    upd.unitid = u.unitid 
+                    AND    upd.effectiveday <= h.mktday 
+                    AND    upd.terminationday > h.mktday 
+                    AND    up.unitscheduleid = usd.unitscheduleid 
+                    AND    usd.effectiveday <= d.mktday 
+                    AND    usd.terminationday > d.mktday 
+                    AND    us.unitscheduleid = up.unitscheduleid 
+                    AND    us.unitid = u.unitid 
+                    AND    us.unitscheduletypeid = ust.unitscheduletypeid 
+                    AND    u.unitshortname = #UnitShortName#
+                    ) unit
+             WHERE  uh.unitid (+) = unit.unitid 
+             AND    uh.effectivehour (+) <= unit.mkthour 
+             AND    uh.terminationhour (+) > unit.mkthour 
+             ORDER BY unit.mkthour
+
+      ]]>
+    </select>
+
+    <insert id="COPModify.InsertMktUnitPlan" parameterMap="COPModify.InsertMktUnitPlanPM">
+      <![CDATA[
+         INSERT INTO v_mktunitplan   
+           ( unitid
+           , effectivehour
+           , terminationhour
+           , unitscheduleid
+           , plannedmw
+           , rsccommitted
+           , mustrun
+           , economic
+           , emergency )  
+         VALUES
+           ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+      ]]>
+    </insert>
+
+    <!-- 'Get the unit data from the current operating plan for the source day and copy to the
+         'destination day  -->
+    <insert id="COPDuplicate.InsertMktUnitPlan" parameterClass="COPDuplicateArg">
+      <![CDATA[
+         INSERT INTO v_mktunitplan (unitid, effectivehour, PlannedMW, UsePlannedMW, 
+                        unitscheduleid, rsccommitted, mustrun, economic, emergency) 
+             SELECT unitid, mkthour + ( #Days# ) , plannedmw, useplannedmw, 
+                    unitscheduleid, rsccommitted, mustrun, economic, emergency 
+             FROM   mktunitplan up, 
+                    mkthour h 
+             WHERE  up.effectivehour <= h.mkthour 
+             AND    up.terminationhour > h.mkthour 
+             AND    trunc(h.mktday) = trunc(#CopyDay#)
+        ]]>
+    </insert>
+    
+    
+    <!-- 'Get the ARD data from the current operating plan for the source day and copy to the
+         'destination day  
+      -->
+    <insert id="COPDuplicate.InsertMktARDPlan" parameterClass="COPDuplicateArg" >
+      <![CDATA[
+         INSERT INTO v_mktardplan (ardid, effectivehour) 
+         SELECT ardid, mkthour + ( #Days# ) 
+         FROM   io_ard_plan_data t  
+         WHERE  trunc(mktday) = trunc(#CopyDay#)
+      ]]>
+    </insert>
+
+    
+    <!-- 'Determine the most recent day with an approved DA case and the next day without
+    'an approved case and use these days as the default source and destination days.
+      -->
+    <select id="COPDuplicate.SelectDefaultCopyDays">
+      <![CDATA[
+       SELECT scr_day, dest_day  
+       FROM  (SELECT MAX(mktday) AS scr_day  
+       FROM   io_days_approved da  
+       WHERE  da_approved = 1),  
+       (SELECT MIN(mktday) AS dest_day  
+       FROM   io_days_approved da  
+       WHERE  da_approved = 0)  
+      ]]>
+    </select>
+
+    <!--     'Use the da_approved flag to validate the date entered.  For the source date, only days
+    'with an approved DA case are allowed.  This ensures that the current operating plan contains
+    'data for the selected day.  For the destination date, only days that do not have an
+    'approved DA case are allowed.  This is to prevent the user from overwriting a valid COP.
+    -->
+    
+    <select id="COPDuplicate.SelectDateStatus" parameterClass="System.DateTime">
+      <![CDATA[
+         SELECT da_approved  
+         FROM   io_days_approved  
+         WHERE  trunc(mktday) = trunc( #MktDay# )
+      ]]>
+    </select>
+    
+  </statements>
+
+</sqlMap>
+

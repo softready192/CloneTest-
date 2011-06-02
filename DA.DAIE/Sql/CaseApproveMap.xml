@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<sqlMap namespace="CaseApprove"
+        xmlns="http://ibatis.apache.org/mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+  <alias>
+    <typeAlias alias="SatelliteCaseHour" type="DA.DAIE.CaseApprove.SatelliteCaseHour" />
+    <typeAlias alias="ProcedureApproveCaseArg" type="DA.DAIE.CaseApprove.CaseApproveArg" />
+    <typeAlias alias="UpdateRTPRDisabledCaseListArg" type="DA.DAIE.CaseApprove.UpdateRTPRDisabledCaseListArg"/>
+    <typeAlias alias="RAACaseArg" type="DA.DAIE.CaseApprove.RAACaseArg"/>
+    <typeAlias alias="SatelliteForecastUnitCommitment" type="DA.DAIE.CaseApprove.SatelliteForecastUnitCommitment"/>
+    <typeAlias alias="SatelliteForecastInterchange" type="DA.DAIE.CaseApprove.SatelliteForecastInterchange"/>
+    <typeAlias alias="SatelliteForecastLoad" type="DA.DAIE.CaseApprove.SatelliteForecastLoad"/>
+    <typeAlias alias="SatelliteLimitUnit" type="DA.DAIE.CaseApprove.SatelliteLimitUnit"/>
+  </alias>
+ 
+  <resultMaps>
+    <resultMap id="Satellite_SelectCaseHoursRM" class="SatelliteCaseHour">
+      <constructor>
+        <argument argumentName="argDBNow" column="dbnow"/>
+        <argument argumentName="argMktDay" column="mktday"/>
+        <argument argumentName="argLocalDay" column="localday"/>
+        <argument argumentName="argStartMktHour" column="startmkthour"/>
+        <argument argumentName="argEndMktHour" column="endmkthour"/>
+        <argument argumentName="argStartLocalHour" column="startlocalhour"/>
+        <argument argumentName="argEndLocalHour" column="endlocalhour"/>
+        <argument argumentName="argStartHourLabel" column="starthourlabel"/>
+        <argument argumentName="argEndHourLabel" column="endhourlabel"/>
+      </constructor>
+    </resultMap>
+    <resultMap id="InterfaceLMPRM" class="DA.DAIE.CaseApprove.InterfaceLMP" >
+      <constructor>
+        <argument argumentName="argPNodeId" column="pnodeid" />
+        <argument argumentName="argMktHour" column="mkthour"/>
+        <argument argumentName="argLMP" column="lmp" />
+        <argument argumentName="argDBTime" column="dbtime"/>
+      </constructor>
+    </resultMap>
+    <resultMap id="SatelliteForecast_UnitCommitmentRM" class="SatelliteForecastUnitCommitment" >
+      <constructor>
+        <argument argumentName="argUnitId" column="unitid"/>
+        <argument argumentName="argPlantShortName" column="plantshortname"/>
+        <argument argumentName="argUnitShortName" column="unitshortname" />
+        <argument argumentName="argMktDay" column="mktday"/>
+        <argument argumentName="argMktHour" column="mkthour" />
+        <argument argumentName="argMW" column="mw"/>
+      </constructor>
+    </resultMap>
+    <resultMap id="SatelliteForecast_InterchangeRM" class="SatelliteForecastInterchange" >
+      <constructor>
+        <argument argumentName="argHourLabel" column="hour" />
+        <argument argumentName="argRegion" column="region"/>
+        <argument argumentName="argMktDay" column="day" />
+        <argument argumentName="argInterchange" column="interchange"/>
+      </constructor>
+    </resultMap>
+    <resultMap id="SatelliteForecast_LoadRM" class="SatelliteForecastLoad" >
+      <constructor>
+        <argument argumentName="argMktHour" column="mkthour" />
+        <argument argumentName="argDemandForecastMW" column="demandforecastmw"/>
+      </constructor>
+    </resultMap>
+    <resultMap id="SatelliteLimit_UnitRM" class="SatelliteLimitUnit">
+      <constructor>
+        <argument argumentName="argUnitShortName" column="unitshortname" />
+        <argument argumentName="argMktDay" column="mktday" />
+        <argument argumentName="argMktHour" column="mkthour" />
+        <argument argumentName="argUnitId" column="unitid" />
+        <argument argumentName="argPlantShortName" column="plantshortname" />
+        <argument argumentName="argEcomin" column="ecomin" />
+        <argument argumentName="argEcomax" column="ecomax" />
+        <argument argumentName="argSelfSchedule" column="selfschedule" />
+      </constructor>
+    </resultMap>
+  </resultMaps>
+
+  <parameterMaps>
+    <parameterMap id="RAACasePM" class="RAACaseArg">
+      <parameter property="CaseId" column="PNodeId" />
+      <parameter property="CaseBeginDate" column="LMP" />
+    </parameterMap>
+    <parameterMap id="ProcedureApproveCasePM" class="ProcedureApproveCaseArg">
+      <parameter property="inCaseId" dbType="VarChar2" ColumnName="incaseid" size="30" direction="Input"/>
+    </parameterMap>
+  </parameterMaps>
+
+  <statements>
+    <select id="ValidateCaseType_SelectCaseStudyMode" resultClass="System.String" parameterClass="System.String">
+      <![CDATA[
+        SELECT sm.modeshortname  
+        FROM   mktcase c,  
+               mktstudymode sm  
+        WHERE  c.studymodeid = sm.studymodeid  
+          AND  c.caseid = #CaseId#
+      ]]>
+    </select>
+
+
+    <select id="ValidateApprovalStatus_SelectCaseState" parameterClass="System.String">
+      <![CDATA[
+         SELECT cs.description  
+         FROM   mktcase c,  
+                mktcasestate cs  
+         WHERE  c.casestate = cs.casestate  
+           AND  c.caseid = #CaseId#
+      ]]>
+    </select>
+
+    <select id="ValidateRealTimePriceResponse_SelectThreshold" parameterClass="System.String">
+      <![CDATA[
+         SELECT v.threshold_lmp as threshold_lmp 
+           FROM popul.ISO_RTPR_PNODE_EVENTS_V v  
+          WHERE v.caseid = #CaseId#
+      ]]>
+    </select>
+
+    <select id="ValidateRealTimePriceResponse_Count" parameterClass="System.String">
+      <![CDATA[
+          SELECT COUNT(*) ROWCOUNT FROM POPUL.ISO_RTPRP_DISABLED_CASE_LIST where case_id = #CaseId#
+      ]]>
+    </select>
+    
+    <insert id="ValidateRealTimePriceResponse_InsertDisabledCaseList" parameterClass="UpdateRTPRDisabledCaseListArg">
+      <![CDATA[
+          INSERT INTO POPUL.ISO_RTPRP_DISABLED_CASE_LIST VALUES( #CaseId#, 'Y')
+      ]]>
+    </insert>
+
+    <update id="ValidateRealTimePriceResponse_UpdateDisabledCaseList" parameterClass="System.String">
+      <![CDATA[
+          UPDATE POPUL.ISO_RTPRP_DISABLED_CASE_LIST set DISABLE_TRIGGERING_FLAG=#DisableTriggeringFlag# where case_id = #CaseId#
+      ]]>
+    </update>
+    
+    
+
+    <update id="UpdateMktPlan" parameterClass="System.String">
+      <![CDATA[
+          UPDATE  Mktplan set initUnitPlan=1 where caseid = #CaseId#
+      ]]>
+    </update>
+
+    <!--'****************************************************************
+    '* This SQL Insert ...
+    '* Updates the Current Operating plan for any units that were
+    '* mitigated in an SCRA case.  Sets the schedule to the
+    '* mitigated schedule for any future hours that the unit was
+    '* not online.
+    '*
+    '****************************************************************-->
+    <insert id="UpdateMitigatedUnits_InsertMktUnitPlan" parameterClass="System.String">
+      <![CDATA[
+       INSERT INTO v_mktunitplan up 
+          (up.unitscheduleid, up.unitid, up.effectivehour, up.terminationhour, 
+           up.rsccommitted, up.mustrun, up.Economic, up.Emergency, up.PlannedMW, 
+           up.PlannedMwOvrd, up.PlannedMwOvrdReasonID) 
+           
+       (SELECT DISTINCT cu.unitscheduleid, 
+               u.unitid, 
+               u.mkthour, 
+               u.mkthour + 1/24 AS endhour, 
+               0 AS committed, 
+               0 AS mustrun, 
+               1 AS economic, 
+               0 AS emergency, 
+               null AS plannedmw, 
+               null AS plannedmwovrd, 
+               null As plannedmwovrdreason 
+        FROM   mktcaseunit cu, 
+                          
+         
+                (SELECT DISTINCT cu.unitid, h.mkthour 
+                 FROM   mktcase c, 
+                        mkthour h, 
+                        mktcaseunit cu, 
+                        mktunitschedule us, 
+                        mktunitscheduletype ust 
+                 WHERE  c.mktDay = h.mktDay 
+                 AND    c.caseid = cu.caseid 
+                 AND    cu.unitscheduleid = us.unitscheduleid 
+                 AND    us.unitscheduletypeid = ust.unitscheduletypeid 
+                 AND    c.caseid =  #CaseId#
+                 AND    ust.costbased = 1 
+                 MINUS 
+                                 
+         
+                 SELECT cu.unitid, h.mkthour 
+                 FROM   mktcaseunit cu, 
+                        mkthour h, 
+                        mktunitschedule us, 
+                        mktunitscheduletype ust 
+                 WHERE  cu.effectivehour <= h.mkthour 
+                 AND    cu.terminationhour > h.mkthour 
+                 AND    cu.unitscheduleid = us.unitscheduleid 
+                 AND    us.unitscheduletypeid = ust.unitscheduletypeid 
+                 AND    cu.caseid =  #CaseId#
+                 AND    ust.costbased = 1 ) u 
+          WHERE  cu.unitid = u.unitid 
+          AND    cu.caseid =  #CaseId#
+          AND    u.mkthour >= TO_DATE(TO_CHAR(timepac.getgmtDate(sysdate), 'mm/dd/yyyy hh24'), 
+                 'mm/dd/yyyy hh24') + 1/24 ) 
+      ]]>
+    </insert>
+
+    <select id="CreatePowerFlow_SelectCCU" parameterClass="System.String">
+      <![CDATA[
+      SELECT 
+        ' ' || 
+        rpad(unit,12, ' ') ||  
+        MAX(DECODE(hourlabel, '01', lpad(mw, 5,'0'), 0)) || ' ' ||   
+        MAX(DECODE(hourlabel, '02', lpad(mw, 5,'0'), 0)) || ' ' || 
+        substr( MAX(DECODE(hourlabel, '02;', lpad(mw, 5,'0'), 0)), 0, MAX(DECODE(hourlabel, '02;', 6, 0)) ) || substr( ' ', 0,MAX(DECODE(hourlabel, '02;', 6, 0))) ||   
+        substr( MAX(DECODE(hourlabel, '03' , lpad(mw, 5,'0'), 0)), 0, MAX(DECODE(hourlabel, '03' , 6, 0)) ) || substr( ' ', 0,MAX(DECODE(hourlabel, '03', 6, 0))) ||   
+        MAX(DECODE(hourlabel, '04', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '05', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '06', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '07', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '08', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '09', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '10', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '11', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '12', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '13', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '14', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '15', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '16', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '17', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '18', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '19', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '20', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '21', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '22', lpad(mw, 5,'0'), 0)) || ' ' || 
+        MAX(DECODE(hourlabel, '23', lpad(mw, 5,'0'), 0)) || ' ' ||
+        MAX(DECODE(hourlabel, '24', lpad(mw, 5,'0'), 0))
+        
+       FROM  ( select NVL(f.unitshortname, upp.unitshortname) as unit, upp.hourlabel, ROUND(sum(nvl(f.factor, 1) * upp.mw),0) as mw 
+         FROM  ( select u.unitid, u.unitshortname, h.hourlabel, nvl(up.plannedmw, 0) as mw 
+                 from   mktunitplan up,
+                        mkthour h,
+                         mktcase c,
+                         mktunit u 
+                  Where up.effectivehour <= h.mkthour 
+                  and    up.terminationhour > h.mkthour 
+                  and    up.unitid = u.unitid 
+                  and    h.mktday = c.mktday 
+                  and    c.caseid = #CaseId#
+                  and    u.participantid is not null) upp, 
+
+               (  select u2.unitid AS CCUnitid, pp.factor, u.unitshortname 
+                  from    mktunit u, 
+                          mktpnodepnode pp, 
+                          mktunit u2, 
+                          mktcase c 
+                  Where u.pnodeid = pp.aggregatepnodeid 
+                  and    c.caseid =  #CaseId#
+                  and    c.mktday  >= pp.effectiveday 
+                  and    c.mktday  <  pp.terminationday 
+                  and    pp.pnodeid = u2.pnodeid 
+                  and    u.combinedcycle = 1 
+                  and    u.combinedcycleunit <> u.unitid 
+                  and    u2.participantid is not null ) f 
+         where  upp.unitid = f.CCUnitid (+) 
+         group by NVL(f.unitshortname, upp.unitshortname), upp.hourlabel) 
+      group by unit
+      ]]>
+    </select>
+
+    <select id="CreatePowerFlow_SelectARD" parameterClass="System.String">
+      <![CDATA[
+        SELECT 
+          ' ' || 
+          rpad(ca.ardshortname,12, ' ') ||  
+          lpad(MAX(DECODE(hourlabel, '01', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '02', ca.mw, 0)),5,' ') || ' ' ||
+          substr( lpad(MAX(DECODE(hourlabel, '02;', ca.mw, 0)),5,' ') || ' ', 0, MAX(DECODE(hourlabel, '02;', 6, 0))) || 
+          substr( lpad(MAX(DECODE(hourlabel, '03', ca.mw, 0)),5,' ') || ' ', 0, MAX(DECODE(hourlabel, '03', 6, 0))) || 
+          
+          lpad(MAX(DECODE(hourlabel, '04', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '05', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '06', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '07', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '08', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '09', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '10', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '11', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '12', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '13', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '14', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '15', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '16', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '17', ca.mw, 0)),5,' ') || ' ' ||          
+          lpad(MAX(DECODE(hourlabel, '18', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '19', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '20', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '21', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '22', ca.mw, 0)),5,' ') || ' ' ||
+          lpad(MAX(DECODE(hourlabel, '23', ca.mw, 0)),5,' ') || ' ' || 
+          lpad(MAX(DECODE(hourlabel, '24', ca.mw, 0)),5,' ') 
+
+        FROM   io_case_ard_data ca, 
+              mkthour h 
+        Where ca.mkthour = h.mkthour 
+        AND    ca.caseid =  #CaseId#
+        GROUP BY ca.ardshortname 
+        ORDER BY ca.ardshortname
+      ]]>
+    </select>
+
+    <select id="ExportToTransmart_SelectInterfaceLMP" resultMap="InterfaceLMPRM">
+      <![CDATA[
+          SELECT /*+INDEX(mktplanpnode,XPKMKTPLANPNODE)*/ 
+                 p.pnodeid, 
+                 mkthour, 
+                 lmp, 
+                 timepac.getgmtdate (sysdate) AS dbtime 
+          FROM   mktplanpnode pp, 
+                 mktpnode p 
+          WHERE  pp.caseid = #CaseId#
+          AND    pp.pnodename LIKE '.I.%' 
+          AND    pp.pnodename = p.pnodename 
+          ORDER BY 1,2 
+      ]]>
+    </select>
+
+    <select id="SetMISCase_SelectCaseStartHour">
+      <![CDATA[
+        SELECT spdstarthour as starthr
+        FROM   mktcase  
+        WHERE  caseid = #CaseId#
+      ]]>
+    </select>
+
+    <select id="Satellite_SelectCaseHours" resultMap="Satellite_SelectCaseHoursRM">
+      <![CDATA[
+        SELECT sysdate As dbnow,
+           d.mktday as mktday,
+           d.localday as localday,
+           d.mktday as startmkthour, 
+           d.mktday+1-1/24 as endmkthour,
+           d.localday as startlocalhour, 
+           d.localday+1-1/24 as endlocalhour, 
+           to_char(d.localday,'mm/dd/yyyy') ||' ' || timepac.gethourlabel(d.mktday) AS starthourlabel, 
+           to_char(d.localday+1-1/24,'mm/dd/yyyy') ||' ' || timepac.gethourlabel(d.mktday+1-1/24) AS endhourlabel 
+        FROM   mktcase c, mktday d 
+        WHERE  c.caseID = #CaseId#
+        AND    d.mktday = c.mktday
+      ]]>
+    </select>
+    
+    <select id="SetMISCase_SelectCountRAACase">
+      <![CDATA[
+        SELECT COUNT(*) AS recs  
+        FROM   isogateway.raa_case_t  
+      ]]>
+    </select>
+
+    <insert id="SetMISCase_InsertRAACase" parameterMap="RAACasePM">
+      <![CDATA[
+        INSERT INTO isogateway.raa_case_t 
+        VALUES ( ?, ?, timepac.getgmtdate ) 
+      ]]>
+    </insert>
+
+    <insert id="SetMISCase_UpdateRAACase" parameterMap="RAACasePM">
+      <![CDATA[
+         UPDATE isogateway.raa_case_t  
+         SET case_id = ? , 
+         begin_date = ? ,  
+         update_time = timepac.getgmtdate  
+      ]]>
+    </insert>
+
+    <select id="SatelliteFiles_CurrentTime">
+      <![CDATA[
+         SELECT sysdate from dual
+         ]]>
+    </select>
+    
+    <select id="SatelliteForecast_UnitCommitment" resultMap="SatelliteForecast_UnitCommitmentRM">
+      <![CDATA[
+        Select 
+            u.unitid 
+           ,u.key1 plantshortname             
+           ,u.key3 unitshortname 
+           ,p.mktday 
+           ,h.mkthour 
+           ,nvl(up.plannedmw,0) mw 
+        FROM 
+            mktunitplan up 
+           ,mktunit u 
+           ,mktplan p 
+           ,mkthour h 
+        WHERE p.caseid = #CaseId#
+           AND u.unitid = up.unitid 
+           AND h.mktday = p.mktday 
+           AND up.effectivehour <= h.mkthour 
+           AND up.terminationhour > h.mkthour 
+           AND u.participantid IS NOT NULL 
+        ORDER BY u.unitid, u.key1, u.key3, h.mkthour
+        ]]>
+    </select>
+
+    <select id="SatelliteForecast_Interchange" resultMap="SatelliteForecast_InterchangeRM">
+      <![CDATA[
+         SELECT hour,   
+                region, 
+                trunc(mktday) AS day, 
+                SUM(total) As interchange 
+         FROM  (SELECT h.hourlabel AS hour, 
+                       pn.PnodeName AS region, 
+                       t.transactionname, 
+                       h.mktday, 
+                       -1 * DECODE(t.SourcePnodeID,t.SinkPnodeID, DECODE(import, 0, -pt.mw, pt.mw),pn.PnodeID, mw, -mw) AS total 
+                FROM   mktPnode pn, 
+                       mktTransaction t, 
+                       mktPlanTransaction pt, 
+                       mkthour h 
+                Where pt.transactionid = t.transactionid 
+                AND    pn.PnodeType = 'I' 
+                AND    pn.PnodeID in (t.SourcePnodeID, t.SinkPnodeID) 
+                AND    pt.mkthour = h.mkthour 
+                AND    t.transactionname NOT LIKE 'RA_PS%' 
+                AND    pt.caseid =  #CaseId#
+         Union 
+                SELECT DISTINCT 
+                       h.hourlabel as hour, 
+                       p.pnodename as region, 
+                       NULL AS transactionname, 
+                       h.mktday, 
+                       0 as total 
+                FROM   mktpnodedef p, 
+                       mktcase c, 
+                       mkthour h 
+                WHERE  p.pnodetype = 'I' 
+                AND    p.effectiveday <= c.mktday 
+                AND    p.terminationday > c.mktday 
+                AND    c.mktday = h.mktday 
+                AND    c.caseid =  #CaseId# 
+                ) 
+         GROUP BY region, hour, mktday 
+         ORDER BY region, hour, mktday 
+      ]]>
+    </select>
+
+
+
+    <select id="SatelliteForecast_Load" resultMap="SatelliteForecast_LoadRM">
+      <![CDATA[
+          SELECT h.mkthour, 
+                 demandforecastmw 
+           FROM  mktareahourly ah, 
+                 mkthour h, 
+                 mktcase c 
+          WHERE  h.mkthour = ah.mkthour 
+            AND  h.mktday = c.mktday 
+            AND  c.caseid =  #CaseId#
+          ORDER BY h.mkthour
+      ]]>
+    </select>
+
+    <select id="SatelliteLimit_Unit" resultMap="SatelliteLimit_UnitRM">
+      <![CDATA[
+      select
+         u.key3 unitshortname 
+        ,p.mktday 
+        ,h.mkthour 
+        ,u.unitid 
+        ,u.key1 plantshortname 
+        ,uh.EconomicMin ecomin 
+        ,uh.EconomicMax ecomax 
+        ,DECODE(up.mustrun, 1, uh.EconomicMin, 0) As selfschedule 
+      FROM 
+         mktunitplan up 
+        ,mktunit u 
+        ,mktplan p 
+        ,mkthour h 
+        ,uds.io_gen_unit_hourly_info uh 
+      WHERE p.caseid = #CaseId#
+        AND u.unitid = up.unitid 
+        AND h.mktday = p.mktday 
+        AND up.effectivehour <= h.mkthour 
+        AND up.terminationhour > h.mkthour 
+        AND u.participantid IS NOT NULL 
+        AND uh.UnitID = u.unitid 
+        AND uh.MktHour = h.mkthour 
+        AND uh.UnitScheduleID = up.unitscheduleid 
+ORDER BY u.unitshortname, h.mkthour
+      ]]>
+    </select>
+    
+    <procedure  id="ProcedureApproveCase" parameterMap="ProcedureApproveCasePM">
+      <![CDATA[
+      mssdatapac.approvecase
+      ]]>
+    </procedure>
+
+
+    
+  </statements>
+
+
+
+</sqlMap>

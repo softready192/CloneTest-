@@ -1,0 +1,77 @@
+﻿<Window x:Class="DA.DAIE.LogView.LogViewWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        SizeToContent="Height"
+        Background="LightGray"
+MinHeight="300" MaxHeight="900" Width="1265"
+WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen"
+    Title="LogViewWindow" xmlns:syncfusion="http://schemas.syncfusion.com/wpf">
+    <Grid Name="grid1">
+        <syncfusion:GridDataControl 
+            Name="gridDataControl1"
+            Margin="20,80,20,20"
+            ShowColumnOptions="True" 
+            AutoPopulateColumns="False"
+            ShowGroupDropArea="True"
+            CellClick="gridDataControl1_CellClick"
+            ColumnSizer="None" AllowDelete="False" AllowEdit="False" AlternatingRowBackground="BlanchedAlmond" ShowAddNewRow="False">
+            <syncfusion:GridDataControl.VisibleColumns>
+                <syncfusion:GridDataVisibleColumn HeaderText="Ago" MappingName="MinutesAgo" AllowFilter="True" Width="Auto">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataInt32SliderFilteringPane />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn HeaderText="Time" MappingName="CreateTime" AllowFilter="True"  Width="Auto">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn MappingName="LoggerName" AllowFilter="True" Width="Auto">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn HeaderText="User" MappingName="RightsUser" AllowFilter="True" Width="Auto">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn HeaderText="Machine" MappingName="HostName" AllowFilter="True" Width="Auto">
+                 <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn MappingName="Level" AllowFilter="True" Width="Auto">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn HeaderText="Message" MappingName="LogMessage" AllowFilter="True" Width="45*">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+                <syncfusion:GridDataVisibleColumn HeaderText="Error" MappingName="LogError" AllowFilter="True" Width="45*">
+                    <syncfusion:GridDataVisibleColumn.FilterPane>
+                        <syncfusion:GridDataTextFilteringPane PredicateType="And" />
+                    </syncfusion:GridDataVisibleColumn.FilterPane>
+                </syncfusion:GridDataVisibleColumn>
+                
+            </syncfusion:GridDataControl.VisibleColumns>
+        </syncfusion:GridDataControl>
+
+        <syncfusion:DateTimeEdit Height="23" HorizontalAlignment="Left" Margin="62,48,0,0" Name="dateTimeEdit1" VerticalAlignment="Top" Width="177" ShowNoDateTime="False" CustomPattern=" " Pattern="LongDate" />
+        <syncfusion:DateTimeEdit Height="23" HorizontalAlignment="Left" Margin="285,48,0,0" Name="dateTimeEdit2" VerticalAlignment="Top" Width="177" Pattern="LongDate" />
+        <Button Height="23" HorizontalAlignment="Left" Margin="475,48,0,0" Name="button1" VerticalAlignment="Top" Click="button1_Click" Width="75">_Refresh Log</Button>
+        <Label Height="30" HorizontalAlignment="Left" Margin="20,10,0,0" Name="label1" VerticalAlignment="Top" Width="120" FontSize="16">Log Viewer</Label>
+        <Label FontSize="11" Height="24.362" HorizontalAlignment="Left" Margin="20,45,0,0" Name="label2" VerticalAlignment="Top" Width="37" HorizontalContentAlignment="Right">From:</Label>
+        <Label FontSize="11" Height="24.362" HorizontalAlignment="Left" Margin="245,46.638,0,0" Name="label3" VerticalAlignment="Top" Width="37" HorizontalContentAlignment="Right">Thru:</Label>
+    </Grid>
+</Window>

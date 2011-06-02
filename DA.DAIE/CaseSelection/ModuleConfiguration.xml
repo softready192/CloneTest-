@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<moduleConfiguration>
+
+  <appMode name="DA">
+
+    <!-- Roles Used For DA
+      Imp_Exp_User_DA_Modify
+      Imp_Exp_User_DA_Read
+      Imp_Exp_User_ITAdmin -->
+
+
+    <button name="cmdDataValid">
+      <label>Data Validation</label>
+      <allowApproved>true</allowApproved>
+      <comment>Opens Data Validation Window</comment>
+      <column>0</column>
+      <row>0</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_DA_Read</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdConstraint" >
+      <label>Upload Constraint File</label>
+      <comment></comment>
+      <column>0</column>
+      <row>1</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdMMM" >
+      <label>Upload MMM File</label>
+      <comment></comment>
+      <column>0</column>
+      <row>2</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdReserves" >
+      <label>Upload System Reserves</label>
+      <comment></comment>
+      <column>0</column>
+      <row>3</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdGetRSCConstraints" >
+      <label>Create RSC Constraints</label>
+      <comment></comment>
+      <column>0</column>
+      <row>4</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdCleanRSCConstraints" >
+      <label>Clean RSC Constraints</label>
+      <comment></comment>
+      <column>0</column>
+      <row>5</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdPrint" >
+      <label>Print Reports</label>
+      <allowApproved>true</allowApproved>
+      <comment></comment>
+      <column>0</column>
+      <row>6</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_DA_Read</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdSFT" >
+      <label>Check SFT Violations</label>
+      <comment></comment>
+      <column>0</column>
+      <row>8</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdRunEES" >
+      <label>Rerun EES Bridge</label>
+      <comment></comment>
+      <column>0</column>
+      <row>9</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdUpdateCloseHour" >
+      <label>Update Market Close Hour</label>
+      <comment></comment>
+      <column>0</column>
+      <row>10</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <!--<button name="cmdSetMIP" >
+      <label>Set MIP Flag</label>
+      <comment></comment>
+      <column>0</column>
+      <row>10</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>-->
+
+    <button name="cmdPIC" >
+      <label>Start PIC</label>
+      <comment></comment>
+      <column>0</column>
+      <row>11</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+  </appMode>
+
+  <appMode name="RAA_SCRA">
+
+    <!-- Roles Used for RAA_SCRA
+      Imp_Exp_User_RAA_SCRA_Modify
+      Imp_Exp_User_RAA_SCRA_Read
+      Imp_Exp_User_ITAdmin -->
+
+    <button name="cmdDataValid" >
+      <label>Data Validation</label>
+      <allowApproved>true</allowApproved>
+      <comment></comment>
+      <column>0</column>
+      <row>0</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_RAA_SCRA_Read</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdInitExtTrans" >
+      <label>Initialize External Transactions</label>
+      <comment></comment>
+      <column>1</column>
+      <row>0</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdConstraint" >
+      <label>Upload Constraint File</label>
+      <comment></comment>
+      <column>0</column>
+      <row>1</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+
+    <button name="cmdExtTrans" >
+      <label>Edit External Transactions</label>
+      <comment></comment>
+      <column>1</column>
+      <row>1</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdMMM" >
+      <label>Upload MMM File</label>
+      <comment></comment>
+      <column>0</column>
+      <row>2</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdInitLoadResp" >
+      <label>Initialize Load Response</label>
+      <comment></comment>
+      <column>1</column>
+      <row>2</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdReserves" >
+      <label>Upload System Reserves</label>
+      <comment></comment>
+      <column>0</column>
+      <row>3</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdInitZoneDemand" >
+      <label>Initialize Zonal Demand</label>
+      <comment></comment>
+      <column>1</column>
+      <row>3</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+    
+    <button name="cmdLocReserves" >
+      <label>Upload Locational Res Req</label>
+      <comment></comment>
+      <column>0</column>
+      <row>4</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <!--<button name="cmdSetMIP" >
+      <label>Set MIP Flag</label>
+      <comment></comment>
+      <column>1</column>
+      <row>4</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>-->
+
+    <button name="spacer01" >
+      <label>----------------------------</label>
+      <comment></comment>
+      <column>0</column>
+      <row>5</row>
+    </button>
+
+    <button name="spacer02" >
+      <label>----------------------------</label>
+      <comment></comment>
+      <column>1</column>
+      <row>5</row>
+    </button>
+
+    <button name="cmdApprove" >
+      <label>Approve SCRA Case</label>
+      <allowApproved>true</allowApproved>
+      <comment></comment>
+      <column>0</column>
+      <row>6</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+    
+    <button name="cmdPIC" >
+      <label>Start PIC</label>
+      <comment></comment>
+      <column>1</column>
+      <row>6</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+       
+    <button name="cmdPrint" >
+      <label>Print Reports</label>
+      <allowApproved>true</allowApproved>
+      <comment></comment>
+      <column>0</column>
+      <row>7</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_RAA_SCRA_Read</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdInitDRZonalFcst" >
+      <label>Initialize DR Zonal Forecast</label>
+      <comment></comment>
+      <column>1</column>
+      <row>7</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdCopDuplicate" >
+      <label>Duplicate COP</label>
+      <comment></comment>
+      <column>0</column>
+      <row>8</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdEditDRZonalFcst" >
+      <label>Edit DR Zonal Forecast</label>
+      <comment></comment>
+      <column>1</column>
+      <row>8</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+    
+    <button name="cmdCopModify" >
+      <label>COP Modification</label>
+      <comment></comment>
+      <column>0</column>
+      <row>9</row>
+      <role>Imp_Exp_User_RAA_SCRA_Modify</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+  </appMode>
+
+  <appMode name="DALR">
+
+    <!-- Roles Used for RAA_SCRA
+      Imp_Exp_User_RAA_SCRA_Modify
+      Imp_Exp_User_RAA_SCRA_Read
+      Imp_Exp_User_ITAdmin -->
+
+    <button name="cmdDataValid" >
+      <label>Data Validation</label>
+      <allowApproved>true</allowApproved>
+      <comment></comment>
+      <column>0</column>
+      <row>0</row>
+      <role>Imp_Exp_User_DA_Modify</role>
+      <role>Imp_Exp_User_DA_Read</role>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdPrint" >
+      <label>Print Reports</label>
+      <allowApproved>true</allowApproved>
+      <comment></comment>
+      <column>0</column>
+      <row>1</row>
+
+    </button>
+  </appMode>
+  
+  <appMode name="ADMIN">
+    <!-- Role Used for ADMIN
+         Imp_Exp_User_ITAdmin -->
+
+    <button name="cmdAdminSql" >
+      <label>Manage Application SQL and DB Logins</label>
+      <comment></comment>
+      <column>0</column>
+      <row>1</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdAdminLoginTest">
+      <label>Test Logins</label>
+      <comment></comment>
+      <column>0</column>
+      <row>2</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdAdminFTPLogin">
+      <label>FTP Login</label>
+      <comment></comment>
+      <column>0</column>
+      <row>3</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdAdminReportLogin">
+      <label>Jasper Report Login</label>
+      <comment></comment>
+      <column>0</column>
+      <row>4</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdLogView">
+      <label>Log Viewer</label>
+      <comment></comment>
+      <column>0</column>
+      <row>5</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdApproveFilesOnly">
+      <label>Generate SCRA Approval Files</label>
+      <comment></comment>
+      <column>0</column>
+      <row>6</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>
+
+    <button name="cmdConnectionPasswords">
+      <label>Set Connection Passwords</label>
+      <comment></comment>
+      <column>0</column>
+      <row>7</row>
+      <role>Imp_Exp_User_ITAdmin</role>
+    </button>    
+    
+  </appMode>
+  
+</moduleConfiguration>

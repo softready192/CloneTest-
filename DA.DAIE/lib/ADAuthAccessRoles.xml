@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Configuration>
+  <AccessRightsDatabase>
+    <ServerName></ServerName>
+    <DatabaseName>entdb1d</DatabaseName>
+    <UserName>sam_login_oper</UserName>
+    <Password Encrypted="YES">iZeyfBINwzwQnUA98ZTbeC5nrx+5dajnkmC1WX/I5g0=</Password>
+    <DefaultDomainName>ISO-NE</DefaultDomainName>
+    <AccessRightsRolesQuery>
+      Select App_Role_Id From User_Role_v Inner Join Login_User_v On Login_User_v.User_Id = User_Role_v.User_Id
+      And lower(Login_User_v.UserName) = :UserName
+    </AccessRightsRolesQuery>
+  </AccessRightsDatabase>
+</Configuration>

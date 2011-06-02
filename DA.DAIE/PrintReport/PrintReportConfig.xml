@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<report_file>
+  
+  <report_group name="DA">
+    <report>
+      <name>System Summary</name>
+      <file>System_Summary</file>
+      <url>systemSummary</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Reserve Summary</name>
+      <file>Reserve_Summary</file>
+      <url>systemReserveSummary</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>LEG Summary</name>
+      <file>LEG_Summary</file>
+      <url>legSummary</url>
+      <orientation>portrait</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Unit Hourly</name>
+      <file>unit_hourly</file>
+      <url>unitHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+    <name>Out of Rate</name>
+    <file>Out_of_Rate</file>
+    <url>out_of_rate</url>
+    <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>Unit Uplift</name>
+      <file>Unit_Uplift</file>
+      <url>unitUplift</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+    <name>Mitigation</name>
+    <file>Mitigation</file>
+    <url>mitigation</url>
+    <orientation>portrait</orientation>
+    </report>
+    <report>
+      <name>Constraint Summary</name>
+      <file>ConstraintSummary</file>
+      <url>constraintSummary</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>Manual Commitments</name>
+      <file>unit_hourly</file>
+      <url>unitHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>Zone=Manual_Overrides genCSV=0</parameters>
+    </report>
+    <report>
+    <name>Production Cost</name>
+    <file>Production_cost</file>
+    <url>productionCost</url>
+    <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>ARD Hourly</name>
+      <file>ARD_Hourly</file>
+      <url>ardHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+    <name>Transaction Hourly</name>
+    <file>Trans_hourly</file>
+    <url>transHourly</url>
+    <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>InterfaceLMP</name>
+      <file>InterfaceLMP</file>
+      <url>lmpSummary</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+  </report_group>
+
+  <report_group name="RAA_SCRA">
+    <report>
+      <name>SystemSummary</name>
+      <file>System_Summary</file>
+      <url>systemSummary</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Reserve Summary</name>
+      <file>Reserve_Summary</file>
+      <url>systemReserveSummary</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>LEG Summary</name>
+      <file>LEG_Summary</file>
+      <url>legSummary</url>
+      <orientation>portrait</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Commitment Differences</name>
+      <file>Commit_Diff</file>
+      <url>committmentDifferences</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>Unit Hourly</name>
+      <file>unit_hourly</file>
+      <url>unitHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>InterfaceLMP</name>
+      <file>InterfaceLMP</file>
+      <url>lmpSummary</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>Startup Shutdown</name>
+      <file>startup_shutdown</file>
+      <url>startupShutdownSummary</url>
+      <orientation>portrait</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Transaction Hourly</name>
+      <file>Trans_hourly</file>
+      <url>transHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Constraint Summary</name>
+      <file>ConstraintSummary</file>
+      <url>constraintSummary</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>ARD Hourly</name>
+      <file>ARD_Hourly</file>
+      <url>ardHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Reserve Zone Summary</name>
+      <file>Reserve_Zone_Summary</file>
+      <url>reserveZoneSummary</url>
+      <orientation>landscape</orientation>
+    </report>
+    <report>
+      <name>DRI_Zonal_Forecast</name>
+      <file>DRI_Zonal_Forecast</file>
+      <url>DRIZonalForecast</url>
+      <orientation>landscape</orientation>
+    </report>
+  </report_group>
+
+  <report_group name="Satellite">
+    <report>
+      <name>LEG Summary</name>
+      <file>LEG_Summary</file>
+      <url>legSummary</url>
+      <orientation>portrait</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Load Hourly</name>
+      <file>load_hourly</file>
+      <url>loadHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>Fixed=NO Inc=NO Dec=NO genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Startup Shutdown</name>
+      <file>startup_shutdown</file>
+      <url>startupShutdownSummary</url>
+      <orientation>portrait</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>System Summary</name>
+      <file>System_Summary</file>
+      <url>systemSummary</url>
+      <orientation>landscape</orientation>
+      <parameters>Show_Summary=NO genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Unit Hourly</name>
+      <file>unit_hourly</file>
+      <url>unitHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>Transaction Hourly</name>
+      <file>Trans_hourly</file>
+      <url>transHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+    <report>
+      <name>ARD Hourly</name>
+      <file>ARD_Hourly</file>
+      <url>ardHourly</url>
+      <orientation>landscape</orientation>
+      <parameters>genCSV=0</parameters>
+    </report>
+  </report_group>
+ 
+</report_file>
