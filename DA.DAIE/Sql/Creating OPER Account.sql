@@ -1,14 +1,48 @@
+/*  OLD GRANT SCRIPT
+--Micah,
 
--- ?????????   grant execute on CLU_LOG.CLU_LOGGER_PUB_PKG to CLU_LOG_ROLE;
+--Let’s us go with a bit different script as it is better to keep the role name now:
 
+DROP ROLE DA_IMP_EXP_USER_ROLE;  -- if exists!
 
-   grant clu_log_role to da_imp_exp_oper_role;
+-- Create the role 
+create role DA_IMP_EXP_USER_ROLE;
+-- Grant/Revoke object privileges 
+GRANT mkt_uds_moi TO DA_IMP_EXP_USER_ROLE;
+GRANT select_catalog_role TO DA_IMP_EXP_USER_ROLE;
+GRANT mkt_uds_mmmupload TO DA_IMP_EXP_USER_ROLE;
+
+grant execute on POPUL.DA_CLU_LOGGER TO DA_IMP_EXP_USER_ROLE;
+
+-- Grant/Revoke system privileges 
+grant alter session to DA_IMP_EXP_USER_ROLE;
+grant create session to DA_IMP_EXP_USER_ROLE;
+
+CREATE USER DA_IMP_EXP_OPER IDENTIFIED BY "isone123";
+
+GRANT DA_IMP_EXP_USER_ROLE TO DA_IMP_EXP_OPER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON v_mktunitplan TO DA_IMP_EXP_USER_ROLE;
+*/
+-- New CLU Log Script
+-- Create the role 
+   create role CLU_LOG_ROLE;
+-- Grant/Revoke object privileges 
+   grant execute on CLU_LOG.CLU_LOGGER_PUB_PKG to CLU_LOG_ROLE;
+-- Grant/Revoke role privileges 
+   grant clu_readonly to CLU_LOG_ROLE;
+-- Grant/Revoke system privileges 
+   grant alter session to CLU_LOG_ROLE;
+   grant create session to CLU_LOG_ROLE;
+   grant create synonym to CLU_LOG_ROLE;
+
+   grant clu_log_role to da_imp_exp_oper;
+
 
 -- New Grant Script.
 
 grant mkt_uds_mmmupload to DA_IMP_EXP_OPER_ROLE;
 
-grant execute on POPUL.DA_CLU_LOGGER to DA_IMP_EXP_OPER_ROLE;
+grant execute on DA_CLU_LOGGER to DA_IMP_EXP_OPER_ROLE;
 
 grant select, insert, update, delete on UDS.V_MKTARDPLAN to DA_IMP_EXP_OPER_ROLE;
 grant select, insert, update, delete on UDS.V_MKTUNITPLAN to DA_IMP_EXP_OPER_ROLE;
@@ -1061,8 +1095,7 @@ grant select on UDS.V_XML_MKT_WEATHERFORECAST to DA_IMP_EXP_OPER_ROLE;
 
 grant alter session to DA_IMP_EXP_OPER_ROLE;
 grant create session to DA_IMP_EXP_OPER_ROLE;
-revoke apf_moi_reports_role from DA_IMP_EXP_OPER;
-grant da_imp_exp_oper_role to da_imp_exp_oper;
+
 
 
 

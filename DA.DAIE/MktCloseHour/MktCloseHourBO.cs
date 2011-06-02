@@ -34,7 +34,7 @@ namespace DA.DAIE.MktCloseHour
                 DateTime dbDate = DBSqlMapper.Instance().QueryForObject<DateTime>("SelectCurrentDBTime", null, MODULE_NAME);
                 DateTime now = DateTime.Now;
                 TimeSpan ts = dbDate.Subtract(now);
-                clockDiffMillisecond = ts.Milliseconds + ts.Seconds * 1000 + ts.Minutes * 60 * 1000 + ts.Hours * 60 * 60 * 1000;
+                clockDiffMillisecond = ts.Milliseconds;
             }
             catch (HandledException he)
             {

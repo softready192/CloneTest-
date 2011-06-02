@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DAIE")]
-[assembly: AssemblyDescription("Build 1.0.0.1")]
+[assembly: AssemblyDescription("build 0.2.5.1 Changed Rounding - Upload Reserve Requirements")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ISO New England")]
 [assembly: AssemblyProduct("DAIE")]
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("0.2.5.1")]
+[assembly: AssemblyFileVersion("0.2.5.1")]
