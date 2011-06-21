@@ -1062,7 +1062,7 @@ grant select on UDS.V_XML_MKT_WEATHERFORECAST to DA_IMP_EXP_OPER_ROLE;
 grant alter session to DA_IMP_EXP_OPER_ROLE;
 grant create session to DA_IMP_EXP_OPER_ROLE;
 revoke apf_moi_reports_role from DA_IMP_EXP_OPER;
-
+grant da_imp_exp_oper_role to da_imp_exp_oper;
 
 
 
